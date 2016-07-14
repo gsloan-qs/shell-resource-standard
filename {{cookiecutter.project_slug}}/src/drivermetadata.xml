@@ -1,0 +1,17 @@
+<Driver Description="{{cookiecutter.project_short_description}}" MainClass="driver.{{cookiecutter.driver_name}}" Name="{{cookiecutter.driver_name}}" Version="1.0.0">
+    <Layout>
+        <Category Name="{{cookiecutter.category}}">
+            <Command Description="Just your regular example command" DisplayName="Example Command" Name="example_function" />
+            <Command Description="Just your regular example command with parameters" DisplayName="Command With Params"
+                     Name="example_function_with_params" >
+                <Parameters>
+                    <Parameter Name="user_param1" Type="String" Mandatory = "True" DefaultValue="Somem default"
+                               DisplayName="String Param" Description="Some example string input"/>
+                    <Parameter Name="user_param2" Type="Lookup" Mandatory = "True" AllowedValues="Yes,No"
+                               DefaultValue="Yes" DisplayName="Lookup Param" Description="Some example lookup input"/>
+                </Parameters>
+            </Command>
+
+        </Category>
+    </Layout>
+</Driver>
