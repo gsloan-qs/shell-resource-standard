@@ -4,7 +4,8 @@
 
 
 ## Introduction
-The Shell Resource Standard is a project used to define a standard for generic Shells that integrate with CloudShell, shells that don't match other CloudShell standards.
+This Shell Standard is a project used to define a standard for generic Shells that integrate with CloudShell, shells that don't match other CloudShell standards. The specifications of this shell include the most common elements that shells usually have such as: vendor, location, ports etc.
+
 
 
 
@@ -129,7 +130,7 @@ Queries the devices and loads the structure and attribute values into CloudShell
 
 
 
-  
+
 ### Save & Restore in sandbox orchestration  
 The shell must implement the save and restore commands and is responsible on saving and restoring its own state. The standard specifies the interface and functionality that shells expose to the sandbox orchestration. These two commands are hidden from the end user, their interface uses .json protocol and they should only be used by the sandbox orchestration via API.
 
@@ -142,4 +143,4 @@ orcestration_save (mode="shallow", custom_params = null)
 orcestration_restore (saved_details)
 ```
 
-**For more details about the save & restore implementation: See the save & restore standard. **
+**For more details:** [Orchestration Standard - Save & Restore ](https://github.com/QualiSystems/sandbox_orchestration_standard/blob/master/save%20%26%20restore%20standard.md)
