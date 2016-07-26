@@ -48,11 +48,11 @@ class {{cookiecutter.driver_name}} (ResourceDriverInterface):
         """
         pass
 
-    def orcestration_restore(self, context, saved_artifact):
+    def orcestration_restore(self, context, saved_artifact_info):
         """
-        Restores a saved artifact previously saved by the Shell driver
+        Restores a saved artifact previously saved by this Shell driver using the orchestration_save function
         :param ResourceCommandContext context: the context the command runs on
-        :param str saved_artifact: The saved details object
+        :param str saved_artifact_info: The saved_artifact_info created by or compatible with this shell
         """
         '''
         The saved_artifact json must conform to the save and restore standard
@@ -79,10 +79,15 @@ class {{cookiecutter.driver_name}} (ResourceDriverInterface):
 
         pass
 
-    def orcestration_save(self, context, mode="shallow", custom_params = None):
+    def orcestration_save(self, context, mode, custom_params):
         """
-        An example function that accepts two user parametesrs
+        Saves the state of the resource and creates a saved artifact. The returned saved_artifact_info
+        must contain all necessary information to be able to restore it if passed to the orchestration_restore
+        function. This command is intended for API use only by sandbox orchestration scripts to implement
+        a save and restore workflow
         :param ResourceCommandContext context: the context the command runs on
+        :param str mode: Can be one of three possible values 'shallow'|'deep'|'auto'
+        :param str custom_params: Optional additional custom information on how to create the saved artifact
         :rtype: str
         :return A saved_artifact json string
         """
@@ -96,8 +101,10 @@ class {{cookiecutter.driver_name}} (ResourceDriverInterface):
 
     def get_inventory(self, context):
         """
-        An example function that accepts two user parametesrs
+        Discovers the resource structure and attributes.
         :param AutoLoadCommandContext context: the context the command runs on
+        :return Attribute and sub-resource information for the Shell resource
+        :rtype: AutoLoadDetails
         """
         '''
         # Add sub resources details
