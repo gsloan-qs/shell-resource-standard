@@ -116,7 +116,7 @@ Port Description | | No
 
 
 
-## Commands
+### Commands
 Below is a list of all the commands that every shell supports.
 
 When creating a new shell according to the standard it is OK not to implement all commands and/or implement additional command, but a command with a functionality that fits one of the predefined list commands should be implemented according to the standard.
@@ -124,7 +124,7 @@ When creating a new shell according to the standard it is OK not to implement al
 Command outputs: On failure an exception containing the error will be thrown and the command will be shown as failed. A failure is defined as any scenario in which the command didn’t complete its expected behavior, regardless if the issue originates from the command’s input, device or the command infrastructure itself. On success the command will just return as passed with no output. The “Autoload” command has a special output on success that CloudShell reads when building the resource hierarchy. The “Save” command will return an output on success with the file name (exact syntax below).
 
 
-### Get Inventory (Shell Autoload)
+#### Get Inventory (Shell Autoload)
 This function queries the device, discovers it's specification and autoloads it into CloudShell. When a new resource is created, CloudShell asks the user to specify some user inputs (i.e user name & password) and then it calls the get_inventory function.
 
 The standard recommended way of communicating and discovering the device should be via SNMP protocol.
@@ -132,13 +132,13 @@ The standard recommended way of communicating and discovering the device should 
 ```python
 get_inventory (context)
 ```  
-#### Command Input
+###### Input
 Parameter | Data Type | Required | Description
 --- | --- | --- | ---
 context | object | system parameter | object of type AutoLoadCommandContext which includes API connectivity details and the details of the resource including attributes that the user entered during the resource creation.
 
 
-#### Command Output
+###### Output
 Parameter | Data Type | Required | Description
 --- | --- | --- | ---
 AutoLoadDetails | object | Yes | object of type AutoLoadDetails which the discovered resource structure and attributes.
@@ -172,16 +172,16 @@ class AutoLoadAttribute:
 
 
 
-### Save & Restore in sandbox orchestration  
-The shell must implement the save and restore commands and is responsible on saving and restoring its own state. The standard specifies the interface and functionality that shells expose to the sandbox orchestration. These two commands are hidden from the end user, their interface uses .json protocol and they should only be used by the sandbox orchestration via API.
+  #### Save & Restore in sandbox orchestration  
+  The shell must implement the save and restore commands and is responsible on saving and restoring its own state. The standard specifies the interface and functionality that shells expose to the sandbox orchestration. These two commands are hidden from the end user, their interface uses .json protocol and they should only be used by the sandbox orchestration via API.
 
 
-```python
-orchestration_save (mode="shallow", custom_params = null)
-```
+  ```python
+  orchestration_save (mode="shallow", custom_params = null)
+  ```
 
-```python
-orchestration_restore (saved_details)
-```
+  ```python
+  orchestration_restore (saved_details)
+  ```
 
-**For more details:** [Orchestration Standard - Save & Restore ](https://github.com/QualiSystems/sandbox_orchestration_standard/blob/master/save%20%26%20restore%20standard.md)
+  **For more details:** [Orchestration Standard - Save & Restore ](https://github.com/QualiSystems/sandbox_orchestration_standard/blob/master/save%20%26%20restore%20standard.md)
