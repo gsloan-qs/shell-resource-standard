@@ -135,7 +135,7 @@ get_inventory (context)
 #### Command Input
 Parameter | Data Type | Required | Description
 --- | --- | --- | ---
-context | object | CloudShell adds | object of type AutoLoadCommandContext which includes API connectivity details and the details of the resource including attributes that the user entered during the resource creation.
+context | object | system parameter | object of type AutoLoadCommandContext which includes API connectivity details and the details of the resource including attributes that the user entered during the resource creation.
 
 
 #### Command Output
