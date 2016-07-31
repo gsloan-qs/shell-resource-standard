@@ -138,7 +138,6 @@ Input / Output | Parameter | Data Type | Required | Description
 Input | context | object | system parameter | object of type AutoLoadCommandContext which includes API connectivity details and the details of the resource including attributes that the user entered during the resource creation.
 Output | AutoLoadDetails | object | Yes | object of type AutoLoadDetails which the discovered resource structure and attributes.
 
-
 ```python
 # Get inventory output details
 class AutoLoadDetails:
@@ -159,7 +158,6 @@ class AutoLoadAttribute:
         self.attribute_name = attribute_name
         self.attribute_value = attribute_value
 ```  
-
 
 
 
