@@ -172,16 +172,16 @@ class AutoLoadAttribute:
 
 
 
-  #### Save & Restore in sandbox orchestration  
-  The shell must implement the save and restore commands and is responsible on saving and restoring its own state. The standard specifies the interface and functionality that shells expose to the sandbox orchestration. These two commands are hidden from the end user, their interface uses .json protocol and they should only be used by the sandbox orchestration via API.
+#### Save & Restore in sandbox orchestration  
+The shell must implement the save and restore commands and is responsible on saving and restoring its own state. The standard specifies the interface and functionality that shells expose to the sandbox orchestration. These two commands are hidden from the end user, their interface uses .json protocol and they should only be used by the sandbox orchestration via API.
 
 
-  ```python
-  orchestration_save (mode="shallow", custom_params = null)
-  ```
+```python
+orchestration_save (mode="shallow", custom_params = null)
+```
 
-  ```python
-  orchestration_restore (saved_details)
-  ```
+```python
+orchestration_restore (saved_details)
+```
 
-  **For more details:** [Orchestration Standard - Save & Restore ](https://github.com/QualiSystems/sandbox_orchestration_standard/blob/master/save%20%26%20restore%20standard.md)
+**For more details:** [Orchestration Standard - Save & Restore ](http://goo.gl/L8pUjP)
