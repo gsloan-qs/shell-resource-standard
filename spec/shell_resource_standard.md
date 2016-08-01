@@ -104,7 +104,6 @@ IPv6 Address | | No
 Port Speed | The port speed (e.g 10Gb/s, 40Gb/s, 100Mb/s) | No
 
 
-
 #####  Generic Power Port
 
 Attribute Name | Details | User input?
@@ -125,7 +124,7 @@ The following chapter describes the list of commands that needs to be supported 
 
 ### Get Inventory (Shell Autoload)
 ```python
-def get_inventory (context)
+def get_inventory(self, context)
 ```  
 This function queries the device, discovers it's specification and autoloads it into CloudShell. When a new resource is created, CloudShell asks the user to specify some user inputs (i.e user name & password) and then it calls the get_inventory function.
 
@@ -137,27 +136,6 @@ Input / Output | Parameter | Data Type | Required | Description
 --- | --- | --- | --- | ---
 Input | context | object | system parameter | object of type AutoLoadCommandContext which includes API connectivity details and the details of the resource including attributes that the user entered during the resource creation.
 Output | AutoLoadDetails | object | Yes | object of type AutoLoadDetails which the discovered resource structure and attributes.
-
-```python
-# Get inventory output details
-class AutoLoadDetails:
-    def __init__(self, resources, attributes):        
-        self.resources = resources    # list[AutoLoadResource]          
-        self.attributes = attributes  # list[AutoLoadAttribute]
-
-class AutoLoadResource:
-    def __init__(self, model, name, relative_address, unique_identifier=None):
-        self.model = model
-        self.name = name
-        self.relative_address = relative_address
-        self.unique_identifier = unique_identifier
-
-class AutoLoadAttribute:
-    def __init__(self, relative_address, attribute_name, attribute_value):
-        self.relative_address = relative_addres
-        self.attribute_name = attribute_name
-        self.attribute_value = attribute_value
-```  
 
 
 
