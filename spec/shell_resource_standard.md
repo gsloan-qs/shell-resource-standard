@@ -21,7 +21,7 @@ Version | Date | Notes
 The Shell version follows Semantic Versioning Guidelines (see details in http://semver.org). In short, the version structure is Major.Minor.Patch, for example “1.0.2”. A Path version is promoted when making backward-compatibility bug fixes, a Minor version is promoted when adding functionality in a backwards-compatible manner and a  Major version is promoted when making a backwards incompatible changes.
 
 
-## Data Model
+## Data Model Structure
 ### Families & Models
 
 - Generic Resource
@@ -56,7 +56,7 @@ Power Port | Generic Power Port | PP[ContainerID][ID] | PP[ContainerID][ID]
 Note: The [ID] for each sub-resource is taken from the device itself (corresponds to the names defined in the device).
 
 
-### Attributes
+## Attributes
 #### Guidelines
 - Attributes which aren’t relevant to a devices won’t be populated by the driver.
 - All attributes which aren't user-input are "read only"
@@ -122,13 +122,20 @@ The following chapter describes the list of commands that needs to be supported 
 **Error Handling**: Command outputs: On failure an exception containing the error will be thrown and the command will be shown as failed. A failure is defined as any scenario in which the command didn’t complete its expected behavior, regardless if the issue originates from the command’s input, device or the command infrastructure itself. On success the command will just return as passed with no output.
 
 
+
 ### Get Inventory (Shell Autoload)
 ```python
 def get_inventory(self, context)
 ```  
+###### Description
 This function queries the device, discovers it's specification and autoloads it into CloudShell. When a new resource is created, CloudShell asks the user to specify some user inputs (i.e user name & password) and then it calls the get_inventory function.
 
 The standard recommended way of communicating and discovering the device should be via SNMP protocol.
+
+
+###### Display Name
+System command, it has no display name.
+
 
 
 ###### Parameters
