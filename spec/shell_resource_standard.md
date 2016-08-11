@@ -21,7 +21,7 @@ Version | Date | Notes
 The Shell version follows Semantic Versioning Guidelines (see details in http://semver.org). In short, the version structure is Major.Minor.Patch, for example “1.0.2”. A Path version is promoted when making backward-compatibility bug fixes, a Minor version is promoted when adding functionality in a backwards-compatible manner and a  Major version is promoted when making a backwards incompatible changes.
 
 
-## Data Model
+## Data Model Structure
 ### Families & Models
 
 - Generic Resource
@@ -56,7 +56,7 @@ Power Port | Generic Power Port | PP[ContainerID][ID] | PP[ContainerID][ID]
 Note: The [ID] for each sub-resource is taken from the device itself (corresponds to the names defined in the device).
 
 
-### Attributes
+## Attributes
 #### Guidelines
 - Attributes which aren’t relevant to a devices won’t be populated by the driver.
 - All attributes which aren't user-input are "read only"
@@ -104,7 +104,6 @@ IPv6 Address | | No
 Port Speed | The port speed (e.g 10Gb/s, 40Gb/s, 100Mb/s) | No
 
 
-
 #####  Generic Power Port
 
 Attribute Name | Details | User input?
@@ -115,60 +114,35 @@ Version | | No
 Port Description | | No
 
 
-
 ## Commands
-Below is a list of all the commands that every shell supports.
+The following chapter describes the list of commands that needs to be supported by the shell. it includes command name, parameters and description of the functionality.
 
-When creating a new shell according to the standard it is OK not to implement all commands and/or implement additional command, but a command with a functionality that fits one of the predefined list commands should be implemented according to the standard.
+**Interface Implementation** - When creating a new shell according to the standard it is OK not to implement all commands and/or implement additional command, but a command with a functionality that fits one of the predefined list commands should be implemented according to the standard.
 
-Command outputs: On failure an exception containing the error will be thrown and the command will be shown as failed. A failure is defined as any scenario in which the command didn’t complete its expected behavior, regardless if the issue originates from the command’s input, device or the command infrastructure itself. On success the command will just return as passed with no output. The “Autoload” command has a special output on success that CloudShell reads when building the resource hierarchy. The “Save” command will return an output on success with the file name (exact syntax below).
+**Error Handling**: Command outputs: On failure an exception containing the error will be thrown and the command will be shown as failed. A failure is defined as any scenario in which the command didn’t complete its expected behavior, regardless if the issue originates from the command’s input, device or the command infrastructure itself. On success the command will just return as passed with no output.
+
 
 
 ### Get Inventory (Shell Autoload)
+```python
+def get_inventory(self, context)
+```  
+###### Description
 This function queries the device, discovers it's specification and autoloads it into CloudShell. When a new resource is created, CloudShell asks the user to specify some user inputs (i.e user name & password) and then it calls the get_inventory function.
 
 The standard recommended way of communicating and discovering the device should be via SNMP protocol.
 
-```python
-get_inventory (context)
-```  
-#### Command Input
-Parameter | Data Type | Required | Description
---- | --- | --- | ---
-context | object | CloudShell adds | object of type AutoLoadCommandContext which includes API connectivity details and the details of the resource including attributes that the user entered during the resource creation.
+
+###### Display Name
+System command, it has no display name.
 
 
-#### Command Output
-Parameter | Data Type | Required | Description
---- | --- | --- | ---
-AutoLoadDetails | object | Yes | object of type AutoLoadDetails which the discovered resource structure and attributes.
 
-```python
-class AutoLoadDetails:
-    def __init__(self, resources, attributes):
-        # list[AutoLoadResource] - the list of resources (root and sub) that were discovered
-        self.resources = resources  
-
-        # list[AutoLoadAttribute] - the list of attributes of the discovered resources
-        self.attributes = attributes  
-
-
-class AutoLoadResource:
-    def __init__(self, model, name, relative_address, unique_identifier=None):
-        self.model = model
-        self.name = name
-        self.relative_address = relative_address
-        self.unique_identifier = unique_identifier
-
-
-class AutoLoadAttribute:
-    def __init__(self, relative_address, attribute_name, attribute_value):
-        self.relative_address = relative_addres
-        self.attribute_name = attribute_name
-        self.attribute_value = attribute_value
-```  
-
-
+###### Parameters
+Input / Output | Parameter | Data Type | Required | Description
+--- | --- | --- | --- | ---
+Input | context | object | system parameter | object of type AutoLoadCommandContext which includes API connectivity details and the details of the resource including attributes that the user entered during the resource creation.
+Output | AutoLoadDetails | object | Yes | object of type AutoLoadDetails which the discovered resource structure and attributes.
 
 
 
@@ -177,11 +151,11 @@ The shell must implement the save and restore commands and is responsible on sav
 
 
 ```python
-orchestration_save (mode="shallow", custom_params = null)
+def orchestration_save (mode="shallow", custom_params = null)
 ```
 
 ```python
-orchestration_restore (saved_details)
+def orchestration_restore (saved_details)
 ```
 
-**For more details:** [Orchestration Standard - Save & Restore ](https://github.com/QualiSystems/sandbox_orchestration_standard/blob/master/save%20%26%20restore%20standard.md)
+**For more details:** [Orchestration Standard - Save & Restore ](http://goo.gl/L8pUjP)
