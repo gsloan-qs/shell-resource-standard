@@ -1,7 +1,7 @@
 from cloudshell.shell.core.resource_driver_interface import ResourceDriverInterface
 from cloudshell.shell.core.driver_context import InitCommandContext, ResourceCommandContext, AutoLoadCommandContext, \
     AutoLoadAttribute, AutoLoadResource, AutoLoadDetails
-
+import cloudshell.api.cloudshell_api as csAPI
 
 class {{cookiecutter.driver_name}} (ResourceDriverInterface):
 
@@ -40,6 +40,80 @@ class {{cookiecutter.driver_name}} (ResourceDriverInterface):
         Private functions are always hidden, and will not be exposed to the end user
         """
         pass
+
+# <editor-fold desc="CloudShell API Helper Functions">
+    ########################################################
+    # CloudShell API Resource Helper Functions
+    #########################################################
+    # The following set of Helper functions are examples of
+    # using the CloudShell API to poll the server for resource
+    # details, and modify resource details
+    ##########################################################
+
+    def _get_cloudshell_api_session(self, context):
+        """
+        Initializes an API session using admin crednetials provided in resource context
+
+        :param context:
+        :type context: cloudshell.shell.core.driver_context.ResourceCommandContext
+        :return:
+        """
+
+        try:
+            return csAPI.CloudShellAPISession(context.connectivity.server_address,
+                                              context.connectivity.admin_user, context.connectivity.admin_pass,
+                                              context.reservation.domain)
+        except AttributeError:
+            return csAPI.CloudShellAPISession(context.connectivity.server_address,
+                                              token_id=context.connectivity.admin_auth_token,
+                                              domain=context.reservation.domain)
+
+    def _get_resource_details(self, context):
+        """
+        Returns the full details from teh GetResourceDetails CloudShell API method
+
+        :param context:
+        :type context: ResourceCommandContext
+        :return:
+        """
+        api_session = self._get_api_session(context)
+        return api_session.GetResourceDetails(context.resource.name)
+
+    def _get_child_resources(self, context):
+        """
+        Returns a list of child resource objects
+
+        :param context:
+        :type context: ResourceCommandContext
+        :return:
+        """
+
+        try:
+            api_session = self._get_cloudshell_api_session(context)
+        except:
+            raise IOError('Unable to initiate API session')
+        resource_details = api_session.GetResourceDetails(context.resource.name)
+        return resource_details.ChildResources
+
+    def _get_attribute_value(self, attribute_name, context):
+        """
+        Returns the current value of a reosurce attribute
+        Raises AttributeError on missing key
+
+        :type context: ResourceCommandContext
+        :param attribute_name:
+        :type attribute_name: str
+        :return:
+        """
+        try:
+            attribute_value = context.resource.attributes[attribute_name]
+            return attribute_value
+        except KeyError:
+            raise AttributeError('Attribute name "' + attribute_name + '" invalid for this resource')
+
+    # </editor-fold>
+
+    # <editor-fold desc="Orchestration Save and Restore Standard">
 
     # <editor-fold desc="Orchestration Save and Restore Standard">
     def orchestration_save(self, context, cancellation_context, mode, custom_params=None):
