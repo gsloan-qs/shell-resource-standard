@@ -76,7 +76,10 @@ class {{cookiecutter.driver_name}} (ResourceDriverInterface):
         :type context: ResourceCommandContext
         :return:
         """
-        api_session = self._get_api_session(context)
+        try:
+            api_session = self._get_api_session(context)
+        except:
+            raise IOError('Unable to initiate API session')
         return api_session.GetResourceDetails(context.resource.name)
 
     def _get_child_resources(self, context):
@@ -95,7 +98,7 @@ class {{cookiecutter.driver_name}} (ResourceDriverInterface):
         resource_details = api_session.GetResourceDetails(context.resource.name)
         return resource_details.ChildResources
 
-    def _get_attribute_value(self, attribute_name, context):
+    def _get_attribute_value(self, attribute_name, context, refresh=False):
         """
         Returns the current value of a reosurce attribute
         Raises AttributeError on missing key
@@ -105,11 +108,24 @@ class {{cookiecutter.driver_name}} (ResourceDriverInterface):
         :type attribute_name: str
         :return:
         """
-        try:
-            attribute_value = context.resource.attributes[attribute_name]
-            return attribute_value
-        except KeyError:
-            raise AttributeError('Attribute name "' + attribute_name + '" invalid for this resource')
+        if not refresh:
+            try:
+                attribute_value = context.resource.attributes[attribute_name]
+                return attribute_value
+            except KeyError:
+                raise AttributeError('Attribute name "' + attribute_name + '" invalid for this resource')
+
+        else:
+            try:
+
+                api_session = self._get_api_session(context)
+            except:
+                raise IOError('Unable to initiate API session')
+
+            try:
+                return api_session.GetAttributeValue(context.resource.name,attribute_name).Value
+            except:
+                raise AttributeError('Attribute name "' + attribute_name + '" invalid fo rthis reosurce')
 
     # </editor-fold>
 
