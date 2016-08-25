@@ -3,6 +3,7 @@ from cloudshell.shell.core.driver_context import InitCommandContext, ResourceCom
     AutoLoadAttribute, AutoLoadResource, AutoLoadDetails
 import cloudshell.api.cloudshell_api as csAPI
 
+
 class {{cookiecutter.driver_name}} (ResourceDriverInterface):
 
     def __init__(self):
@@ -82,6 +83,7 @@ class {{cookiecutter.driver_name}} (ResourceDriverInterface):
             raise IOError('Unable to initiate API session')
         return api_session.GetResourceDetails(context.resource.name)
 
+
     def _get_child_resources(self, context):
         """
         Returns a list of child resource objects
@@ -90,7 +92,7 @@ class {{cookiecutter.driver_name}} (ResourceDriverInterface):
         :type context: ResourceCommandContext
         :return:
         """
-
+        context.resource.
         try:
             api_session = self._get_cloudshell_api_session(context)
         except:
