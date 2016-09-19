@@ -2,6 +2,7 @@ from cloudshell.shell.core.resource_driver_interface import ResourceDriverInterf
 from cloudshell.shell.core.driver_context import InitCommandContext, ResourceCommandContext, AutoLoadCommandContext, \
     AutoLoadAttribute, AutoLoadResource, AutoLoadDetails
 import cloudshell.api.cloudshell_api as csAPI
+import QualiLab_CLI
 
 
 class {{cookiecutter.driver_name}} (ResourceDriverInterface):
@@ -248,6 +249,7 @@ class {{cookiecutter.driver_name}} (ResourceDriverInterface):
 
            return AutoLoadDetails(sub_resources,attributes)
         '''
+
         pass
 
     # </editor-fold>
